@@ -14,7 +14,7 @@ def majority_vote(preds, n_classes):
     return counts.argmax(axis=1)
  
  
-# ===================== 2.1 Bagging =====================
+# 2.1 Bagging 
 class Bagging:
     def __init__(self, n_estimators=25, criterion="gini", seed=42):
         self.n_estimators = n_estimators
@@ -38,7 +38,7 @@ class Bagging:
         return majority_vote(preds, self.n_classes_)
  
  
-# ===================== 2.2 AdaBoost (multi-class SAMME) =====================
+# 2.2 AdaBoost (multi-class SAMME) 
 class AdaBoostSAMME:
     def __init__(self, n_estimators=50, max_depth=3, criterion="gini"):
         self.n_estimators = n_estimators
@@ -75,7 +75,7 @@ class AdaBoostSAMME:
         return scores.argmax(axis=1)                      # step 6: H(x) = argmax_k sum alpha
  
  
-# ===================== main run =====================
+# main run 
 def report(name, crit, model, Xtr, ytr, Xte, yte, yf_te, fam_map, secs, in_matrix=True):
     tr = accuracy(ytr, model.predict(Xtr))
     te_pred = model.predict(Xte)

@@ -3,7 +3,7 @@ from common import load_data, stratified_split, accuracy, species_to_family_map,
 from part1_decision_tree import DecisionTree
 
 
-# ===================== Hierarchical Classifier =====================
+# Hierarchical Classifier 
 class HierarchicalClassifier:
     """Router-plus-experts hierarchical classifier.
 
@@ -75,7 +75,7 @@ def oracle_predict(X, yf_true, experts):
     return predictions
 
 
-# ===================== main run =====================
+# main run 
 def main():
     X, ys, yf, species_names, family_names = load_data()
     train, test = stratified_split(ys)
@@ -96,26 +96,26 @@ def main():
 
         clf = train_hierarchical(Xtr, ytr_s, ytr_f, criterion)
 
-        # --- Router accuracy ---
+        # Router accuracy 
         router_tr_pred = clf.predict_family(Xtr)
         router_te_pred = clf.predict_family(Xte)
         router_tr = accuracy(ytr_f, router_tr_pred)
         router_te = accuracy(yte_f, router_te_pred)
         print(f"Router accuracy:   train={100*router_tr:6.2f}%  test={100*router_te:6.2f}%")
 
-        # --- Overall (species) accuracy ---
+        # Overall (species) accuracy 
         overall_tr_pred = clf.predict(Xtr)
         overall_te_pred = clf.predict(Xte)
         overall_tr = accuracy(ytr_s, overall_tr_pred)
         overall_te = accuracy(yte_s, overall_te_pred)
         print(f"Overall accuracy:  train={100*overall_tr:6.2f}%  test={100*overall_te:6.2f}%")
 
-        # --- Oracle accuracy (perfect router -> experts only) ---
+        #  Oracle accuracy (perfect router -> experts only) 
         oracle_pred = oracle_predict(Xte, yte_f, clf.experts)
         oracle_acc = accuracy(yte_s, oracle_pred)
         print(f"Oracle accuracy:   test ={100*oracle_acc:6.2f}%")
 
-        # --- Failure fractions ---
+        # Failure fractions 
         # pA: router correct but expert wrong
         router_correct = (router_te_pred == yte_f)
         expert_wrong   = (overall_te_pred != yte_s)
@@ -125,14 +125,14 @@ def main():
         print(f"Failure fractions: pA (router right, expert wrong)={100*pA:.2f}%  "
               f"pB (router wrong)={100*pB:.2f}%")
 
-        # --- Numerical check: Aoverall = Arouter - pA ---
+        # Numerical check: Aoverall = Arouter - pA 
         overall_check = router_te - pA
         match = np.isclose(overall_te, overall_check, atol=1e-9)
         print(f"Check Aoverall = Arouter - pA: "
               f"{100*overall_te:.4f}% = {100*router_te:.4f}% - {100*pA:.4f}% "
               f"= {100*overall_check:.4f}%  [{'PASS' if match else 'FAIL'}]")
 
-        # --- 4x4 Router confusion matrix ---
+        #  4x4 Router confusion matrix 
         cm_router = confusion_matrix(yte_f, router_te_pred, n_families)
         col_w = max(len(n) for n in family_names) + 2
         print(f"\nRouter 4x4 confusion matrix (rows=true, cols=predicted):")
@@ -142,7 +142,7 @@ def main():
             vals = "".join(f"{v:>{col_w}}" for v in row)
             print(f"{family_names[i]:>{col_w}}  {vals}")
 
-        # --- 10x10 Species confusion matrix ---
+        #  10x10 Species confusion matrix 
         cm_species = confusion_matrix(yte_s, overall_te_pred, n_species)
         sp_w = max(len(n) for n in species_names) + 1
         print(f"\nSpecies 10x10 confusion matrix (rows=true, cols=predicted):")
@@ -152,7 +152,7 @@ def main():
             vals = "".join(f"{v:>9}" for v in row)
             print(f"{species_names[i]:>{sp_w}}  {vals}")
 
-        # --- Per-family test accuracy ---
+        # Per-family test accuracy 
         print(f"\nPer-family test accuracy:")
         for fam_idx, fname in enumerate(family_names):
             mask = yte_f == fam_idx
@@ -160,7 +160,7 @@ def main():
                 fam_acc = accuracy(yte_s[mask], overall_te_pred[mask])
                 print(f"  {fname}: {100*fam_acc:.2f}%")
 
-        # --- Comparison with flat model (Part 1) ---
+        # Comparison with flat model (Part 1) 
         flat_tree = DecisionTree(criterion, max_depth=None, min_samples_split=2)
         flat_tree.fit(Xtr, ytr_s)
         flat_te_pred = flat_tree.predict(Xte)

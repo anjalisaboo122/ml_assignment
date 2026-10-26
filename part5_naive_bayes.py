@@ -2,7 +2,7 @@ import numpy as np
 from common import load_data, stratified_split, accuracy, species_to_family_map
 
 
-# ===================== Gaussian Naive Bayes =====================
+# Gaussian Naive Bayes 
 class GaussianNB:
     """Gaussian Naive Bayes classifier.
 
@@ -60,7 +60,7 @@ class GaussianNB:
         return self.classes_[np.argmax(log_post, axis=1)]
 
 
-# ===================== sanity check =====================
+# sanity check
 def run_sanity_check():
     """One feature, class 0: {0,2}, class 1: {10,12}, equal priors.
     Means = 1 and 11, variances = 1 (+eps).
@@ -76,7 +76,7 @@ def run_sanity_check():
     print("PASS sanity check: x=3 -> class 0,  x=9 -> class 1")
 
 
-# ===================== main run =====================
+# main run 
 def main():
     run_sanity_check()
 
@@ -100,7 +100,7 @@ def main():
     # machine-parsable RESULT line (no criterion for NB)
     print(f"RESULT|Gaussian Naive Bayes||{100*tr_acc:.2f}|{100*te_acc:.2f}|{100*fam_acc:.2f}")
 
-    # --- Correlation analysis of the 22 training MFCCs ---
+    # Correlation analysis of the 22 training MFCCs 
     corr = np.corrcoef(Xtr.T)   # (22, 22)
     print("\nCorrelation matrix of 22 training MFCCs (22x22):")
     np.set_printoptions(precision=3, suppress=True, linewidth=130)

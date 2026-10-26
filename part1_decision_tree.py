@@ -5,7 +5,7 @@ from common import load_data, stratified_split, accuracy, species_to_family_map
 TOL = 1e-12   # tiny number: treats float differences smaller than this as "equal"
 
 
-# ===================== impurity functions =====================
+# impurity functions
 def gini(counts):
     counts = np.asarray(counts, dtype=float)
     total = counts.sum(axis=-1, keepdims=True)
@@ -21,7 +21,7 @@ def entropy(counts):
     return -(p * logp).sum(axis=-1)
 
 
-# ===================== the tree =====================
+# the tree 
 class DecisionTree:
     def __init__(self, criterion="gini", max_depth=None, min_samples_split=2,
                  max_features=None, rng=None):
@@ -146,7 +146,7 @@ class DecisionTree:
         return self.value_[node]
 
 
-# ===================== sanity checks =====================
+#  sanity checks
 def run_sanity_checks():
     # (a)
     assert np.isclose(gini([3, 3]), 0.5) and np.isclose(entropy([3, 3]), 1.0)
@@ -172,7 +172,7 @@ def run_sanity_checks():
     print("PASS (d) single-class data -> one leaf, no crash")
 
 
-# ===================== main run =====================
+#  main run
 def main():
     run_sanity_checks()
 

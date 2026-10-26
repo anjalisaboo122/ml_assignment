@@ -5,7 +5,7 @@ from part1_decision_tree import DecisionTree
 from part2_bagging_boosting import Bagging, majority_vote
 
 
-# ===================== Random Forest =====================
+# Random Forest
 class RandomForest:
     """Bagging + a fresh random subset of m features at EVERY split."""
     def __init__(self, n_estimators=50, criterion="gini", max_features=4, seed=42):
@@ -45,7 +45,7 @@ def avg_pairwise_agreement(trees, X):
     return total / pairs
 
 
-# ===================== main run =====================
+# main run 
 def main():
     X, ys, yf, _, _ = load_data()
     train, test = stratified_split(ys)

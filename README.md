@@ -4,8 +4,8 @@ BITS F464: Machine Learning  |  Assignment 1
 Team members
 ------------
   Jayaditya Kushwah - 2024ADPS0188H
-  Aadi M. Ajit Kumar - 2024A7PS20xxH
-  Anjali Saboo - 2024A7PS20XXH
+  Aadi M. Ajit Kumar - 2024A7PS2014H
+  Anjali Saboo - 2024A7PS2011H
 
 Environment
 -----------
